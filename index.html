@@ -1,0 +1,620 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>المكتبة الرقمية للمصمم التعليمي</title>
+<meta name="description" content="المكتبة الرقمية المهنية للمصمم التعليمي — الأدوات والتقنيات الرقمية">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f5f4fb; --surface:#ffffff; --surface-2:#f7f6fc; --ink:#1d1b2e; --ink-2:#4d4a63; --muted:#8a87a0; --line:#e8e6f2;
+  --pri:#4a3a91; --pri-2:#6a58c2; --pri-soft:#ece8fb; --on-pri:#ffffff;
+  --green:#2f8a5b; --green-soft:#e3f4ea; --red:#c2413b; --red-soft:#fdecec;
+  --peach:#fbf0dc; --lilac:#ece6fb; --mint:#e1f3ef; --mint-ink:#2e8a78; --peach-ink:#b77b25;
+  --hero-a:#e9e5fa; --hero-b:#f7f5fd;
+  --shadow:0 1px 2px rgba(40,30,90,.05),0 8px 24px rgba(40,30,90,.06);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#14131c; --surface:#1d1c28; --surface-2:#232232; --ink:#ecebf5; --ink-2:#c3c1d3; --muted:#8f8ca6; --line:#2f2d40;
+    --pri:#9d8cf0; --pri-2:#b4a6f5; --pri-soft:#2b2747; --on-pri:#16131f;
+    --green:#6fcf98; --green-soft:#1d3428; --red:#f08b85; --red-soft:#3a2224;
+    --peach:#352c1e; --lilac:#2a2640; --mint:#1c3230; --mint-ink:#6fd0bd; --peach-ink:#e8b062;
+    --hero-a:#211e36; --hero-b:#191824; --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#14131c; --surface:#1d1c28; --surface-2:#232232; --ink:#ecebf5; --ink-2:#c3c1d3; --muted:#8f8ca6; --line:#2f2d40;
+  --pri:#9d8cf0; --pri-2:#b4a6f5; --pri-soft:#2b2747; --on-pri:#16131f;
+  --green:#6fcf98; --green-soft:#1d3428; --red:#f08b85; --red-soft:#3a2224;
+  --peach:#352c1e; --lilac:#2a2640; --mint:#1c3230; --mint-ink:#6fd0bd; --peach-ink:#e8b062;
+  --hero-a:#211e36; --hero-b:#191824; --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"IBM Plex Sans Arabic",system-ui,sans-serif;line-height:1.75;font-size:15px}
+h1,h2,h3,.brand-t{font-family:"Cairo","IBM Plex Sans Arabic",sans-serif}
+a{color:var(--pri)}
+button{font-family:inherit;cursor:pointer;color:inherit}
+:focus-visible{outline:3px solid var(--pri-2);outline-offset:2px;border-radius:8px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 16px}
+.ico{width:22px;height:22px;flex:none;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+/* header */
+header.top{background:var(--surface);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20}
+.top .wrap{display:flex;align-items:center;gap:22px;height:72px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink)}
+.brand-t{font-weight:800;font-size:17px;line-height:1.3}
+nav.menu{display:flex;gap:4px}
+nav.menu button{background:none;border:0;padding:8px 12px;font-size:15px;color:var(--ink-2);border-bottom:2px solid transparent}
+nav.menu button.on{color:var(--pri);border-bottom-color:var(--pri);font-weight:600}
+.hsearch{position:relative;margin-inline-start:auto;width:290px}
+.hsearch input{width:100%;border:1px solid var(--line);background:var(--surface-2);color:var(--ink);border-radius:999px;padding:9px 40px 9px 14px;font:inherit}
+.hsearch .ico{position:absolute;right:13px;top:50%;transform:translateY(-50%);color:var(--muted);width:18px;height:18px}
+.sres{position:absolute;top:calc(100% + 6px);right:0;left:0;background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);padding:6px;display:none}
+.sres.show{display:block}
+.sres button{display:flex;gap:10px;align-items:center;width:100%;background:none;border:0;padding:8px;border-radius:8px;text-align:right}
+.sres button:hover{background:var(--pri-soft)}
+.sres small{color:var(--muted);display:block;font-size:12px;line-height:1.3}
+.iconbtn{background:none;border:1px solid var(--line);width:38px;height:38px;border-radius:50%;display:grid;place-items:center;color:var(--ink-2)}
+.burger{display:none}
+
+/* hero */
+.hero{background:linear-gradient(110deg,var(--hero-b) 0%,var(--hero-a) 60%,var(--hero-a) 100%);border-bottom:1px solid var(--line);overflow:hidden}
+.hero .wrap{display:grid;grid-template-columns:1.1fr 1fr;align-items:center;gap:24px;min-height:250px;padding-top:24px;padding-bottom:56px}
+.hero h1{font-size:clamp(26px,3.4vw,40px);line-height:1.45;margin:0 0 10px;font-weight:800}
+.hero p{margin:0;color:var(--ink-2);max-width:480px;font-size:16px}
+.hero svg.art{width:100%;max-width:470px;height:auto;justify-self:start;display:block}
+
+/* categories */
+.cats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:-26px;position:relative}
+.cat{border:0;border-radius:16px;padding:18px 18px 16px;text-align:right;display:flex;flex-direction:column;gap:6px;min-height:128px;box-shadow:var(--shadow);transition:transform .15s}
+.cat:hover{transform:translateY(-3px)}
+.cat .row{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+.cat b{font-family:"Cairo",sans-serif;font-size:16px;line-height:1.5}
+.cat span.d{font-size:13px;opacity:.85}
+.cat .go{margin-top:auto;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.85);color:#222}
+.cat .ico{width:34px;height:34px;stroke-width:1.5}
+.cat.c1{background:var(--pri);color:var(--on-pri)}
+.cat.c1 .go{background:rgba(255,255,255,.2);color:var(--on-pri)}
+.cat.c2{background:var(--peach);color:var(--ink)} .cat.c2 .ico{color:var(--peach-ink)}
+.cat.c3{background:var(--lilac);color:var(--ink)} .cat.c3 .ico{color:var(--pri)}
+.cat.c4{background:var(--mint);color:var(--ink)} .cat.c4 .ico{color:var(--mint-ink)}
+.cat .soon{font-size:11px;background:rgba(0,0,0,.06);border-radius:999px;padding:1px 8px;align-self:flex-start}
+:root[data-theme="dark"] .cat .soon{background:rgba(255,255,255,.1)}
+
+/* breadcrumb */
+.crumb{display:flex;align-items:center;gap:8px;margin:26px 0 16px;font-size:14px;color:var(--muted);flex-wrap:wrap}
+.crumb button{background:none;border:0;padding:0;color:var(--muted);font-size:14px}
+.crumb b{color:var(--ink)}
+.crumb .ico{width:16px;height:16px}
+
+/* layout */
+.layout>*,.inner>*,.two>*{min-width:0}
+.layout{display:grid;grid-template-columns:260px 1fr;gap:18px;align-items:start;padding-bottom:48px}
+.box{background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow)}
+.side{padding:16px;position:sticky;top:90px}
+.side h3{margin:2px 6px 10px;font-size:16px}
+.side .list{display:flex;flex-direction:column;gap:2px}
+.tbtn{display:flex;align-items:center;gap:12px;background:none;border:0;padding:9px 10px;border-radius:12px;text-align:right;font-weight:600;font-size:15px;width:100%;direction:rtl}
+.tbtn:hover{background:var(--surface-2)}
+.tbtn.on{background:var(--pri-soft);color:var(--pri)}
+.tbtn .en{direction:ltr}
+.side hr{border:0;border-top:1px solid var(--line);margin:10px 4px}
+.tbtn.sm{font-weight:500;color:var(--ink-2);font-size:14px}
+.tbtn.sm .ico{width:20px;height:20px;color:var(--pri)}
+.mono{border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:800;flex:none;font-family:"Cairo",system-ui,sans-serif}
+.mono.s{width:34px;height:34px;font-size:15px}
+.mono.l{width:86px;height:86px;font-size:34px;box-shadow:0 8px 20px rgba(60,40,140,.25)}
+
+.content{display:flex;flex-direction:column;gap:16px;min-width:0}
+.head{display:flex;align-items:center;gap:18px;padding:20px 22px}
+.head h2{margin:0;font-size:32px;line-height:1.2;direction:ltr;text-align:right;font-weight:800}
+.head .sub{color:var(--ink-2);margin-top:4px}
+.head .acts{margin-inline-start:auto;display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+.head .acts .row{display:flex;gap:8px}
+.iconbtn.on{background:var(--pri-soft);color:var(--pri);border-color:var(--pri-soft)}
+.pill{background:var(--peach);border-radius:999px;padding:4px 12px;font-size:13px;color:var(--ink-2);display:flex;align-items:center;gap:6px;white-space:nowrap}
+.pill .st{color:#e0a21b}
+
+.inner{display:grid;grid-template-columns:1fr 300px;gap:16px;align-items:start}
+.col{display:flex;flex-direction:column;gap:16px;min-width:0}
+.sec{padding:18px 20px}
+.sec h3{display:flex;align-items:center;gap:8px;margin:0 0 10px;font-size:17px}
+.sec h3 .ico{color:var(--pri)}
+.sec p{margin:0;color:var(--ink-2)}
+.uses{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.use{background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:14px 10px;text-align:center;font-size:14px;font-weight:500;display:flex;flex-direction:column;align-items:center;gap:8px;line-height:1.5}
+.use .ico{width:34px;height:34px;color:var(--pri);stroke-width:1.5}
+.feats{display:flex;flex-wrap:wrap;gap:8px}
+.feat{background:var(--pri-soft);color:var(--pri);border-radius:999px;padding:4px 12px;font-size:13px;font-weight:600}
+.two{display:grid;grid-template-columns:1fr 210px;gap:16px}
+.plan{display:grid;grid-template-columns:auto 1fr;gap:4px 10px;align-items:center;justify-items:start;border-radius:12px;padding:12px 14px;margin-top:8px}
+.plan.free{background:var(--green-soft)}
+.plan.paid{background:var(--pri-soft)}
+.plan b{direction:ltr;white-space:nowrap}
+.plan .tag{font-size:12px;border-radius:999px;padding:1px 10px;font-weight:700;color:#fff}
+.plan.free .tag{background:var(--green)}
+.plan.paid .tag{background:var(--pri)}
+:root[data-theme="dark"] .plan .tag{color:#111}
+.plan span.t{font-size:13px;color:var(--ink-2);line-height:1.7;grid-column:1/-1}
+.langpill{display:inline-block;background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:6px 12px;font-weight:600;margin-bottom:8px}
+.lang p{font-size:13px}
+.limits{background:var(--red-soft);border:1px solid transparent}
+.limits h3 .ico{color:var(--red)}
+.limits ul{margin:0;padding-inline-start:20px;color:var(--ink-2)}
+.limits li::marker{color:var(--red)}
+.access{display:flex;align-items:center;justify-content:center;gap:10px;background:var(--pri);color:var(--on-pri);text-decoration:none;border-radius:12px;padding:13px;font-weight:700;font-size:16px}
+.access:hover{background:var(--pri-2)}
+.stamp{font-size:12px;color:var(--muted);text-align:center;margin-top:-6px}
+
+/* rating */
+.rate h3{margin:0 0 12px;font-size:17px}
+.rate .lbl{font-weight:600;font-size:14px;margin:6px 0 4px}
+.stars{display:flex;gap:4px;justify-content:center;direction:ltr;margin:4px 0 10px}
+.star{background:none;border:0;padding:0;line-height:0;color:#e0a21b}
+.star svg{width:30px;height:30px;fill:none;stroke:currentColor;stroke-width:1.6}
+.star.on svg{fill:currentColor}
+.rate input,.rate textarea{width:100%;font:inherit;font-size:14px;border:1px solid var(--line);background:var(--surface-2);color:var(--ink);border-radius:10px;padding:9px 12px;margin-bottom:8px;resize:vertical}
+.send{width:100%;display:flex;align-items:center;justify-content:center;gap:8px;background:var(--pri);color:var(--on-pri);border:0;border-radius:10px;padding:10px;font-weight:700}
+.msg{font-size:13px;min-height:20px;color:var(--green);margin-top:6px}
+.rate hr{border:0;border-top:1px solid var(--line);margin:14px 0}
+.review{border:1px solid var(--line);border-radius:12px;padding:12px;display:flex;gap:10px}
+.avatar{width:38px;height:38px;border-radius:50%;background:var(--pri-soft);color:var(--pri);display:grid;place-items:center;flex:none}
+.review b{display:block}
+.review .when{font-size:12px;color:var(--muted)}
+.review .rs{color:#e0a21b;letter-spacing:2px;font-size:13px}
+.review p{margin:2px 0 0;font-size:14px;color:var(--ink-2)}
+.emptyrev{text-align:center;color:var(--muted);font-size:14px;padding:14px 6px;border:1px dashed var(--line);border-radius:12px}
+.small{font-size:12px;color:var(--muted);margin-top:8px}
+
+/* compare & picker */
+.table-wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:680px;font-size:14px}
+th,td{padding:12px 14px;border-bottom:1px solid var(--line);text-align:right;vertical-align:top}
+thead th{background:var(--surface-2);font-weight:700}
+tbody tr:last-child td{border-bottom:0}
+td.tn button{background:none;border:0;padding:0;color:var(--pri);font-weight:700;direction:ltr;text-decoration:underline}
+.opts{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
+.opt{border:1px solid var(--line);background:var(--surface-2);border-radius:12px;padding:12px 14px;text-align:right;font-size:15px}
+.opt:hover{border-color:var(--pri)}
+.opt[aria-pressed="true"]{border-color:var(--pri);background:var(--pri-soft)}
+.rec{display:flex;gap:12px;align-items:center;border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-top:10px}
+.rec .badge{font-size:12px;border-radius:999px;padding:1px 10px;background:var(--pri-soft);color:var(--pri);font-weight:700;margin-inline-start:6px}
+.rec button{margin-inline-start:auto;background:none;border:1px solid var(--pri);color:var(--pri);border-radius:10px;padding:6px 14px;font-weight:600}
+
+/* modal + toast */
+dialog{border:0;border-radius:16px;padding:0;width:min(560px,calc(100vw - 24px));background:var(--surface);color:var(--ink);box-shadow:0 20px 60px rgba(0,0,0,.3)}
+dialog::backdrop{background:rgba(20,15,40,.5)}
+.dl-h{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--line)}
+.dl-h h3{margin:0;font-size:18px}
+.dl-b{padding:18px 20px;color:var(--ink-2)}
+.dl-b ol,.dl-b ul{padding-inline-start:20px;margin:0}
+.toast{position:fixed;bottom:22px;left:50%;transform:translate(-50%,30px);opacity:0;background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:999px;font-size:14px;transition:.25s;pointer-events:none;z-index:50;max-width:calc(100vw - 32px);text-align:center}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+footer{border-top:1px solid var(--line);background:var(--surface);padding:22px 0;color:var(--muted);font-size:13px;text-align:center}
+
+/* responsive */
+@media (max-width:1060px){
+  .inner{grid-template-columns:1fr}
+  .hsearch{width:220px}
+}
+@media (max-width:860px){
+  nav.menu{display:none}
+  nav.menu.open{display:flex;flex-direction:column;position:absolute;top:72px;right:0;left:0;background:var(--surface);border-bottom:1px solid var(--line);padding:8px 16px}
+  .burger{display:grid}
+  .hsearch{width:auto;flex:1}
+  .brand-t{font-size:14px}
+  .hero .wrap{grid-template-columns:1fr;padding-top:26px;padding-bottom:40px}
+  .hero svg.art{max-width:330px;justify-self:center}
+  .cats{grid-template-columns:repeat(2,1fr)}
+  .layout{grid-template-columns:1fr}
+  .side{position:static;padding:12px}
+  .side .list{flex-direction:row;overflow-x:auto;gap:6px;padding-bottom:4px}
+  .tbtn{width:auto;white-space:nowrap;flex:none}
+  .side hr,.side h3{display:none}
+}
+@media (max-width:560px){
+  .top .wrap{gap:10px}
+  .brand-t span{display:none}
+  .head{flex-wrap:wrap;padding:16px}
+  .head .acts{margin-inline-start:0;flex-direction:row-reverse;width:100%;justify-content:space-between;align-items:center}
+  .mono.l{width:64px;height:64px;font-size:26px}
+  .head h2{font-size:26px}
+  .uses{grid-template-columns:1fr}
+  .use{flex-direction:row;text-align:right}
+  .use .ico{width:28px;height:28px}
+  .two{grid-template-columns:1fr}
+  .cat{min-height:116px;padding:14px}
+  .cat b{font-size:14px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></symbol>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11 12 4l9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></symbol>
+    <symbol id="i-chev" viewBox="0 0 24 24"><path d="m14 6-6 6 6 6"/></symbol>
+    <symbol id="i-laptop" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="11" rx="1.5"/><path d="M2 19h20"/></symbol>
+    <symbol id="i-layers" viewBox="0 0 24 24"><path d="m12 3 9 5-9 5-9-5 9-5z"/><path d="m3 13 9 5 9-5"/><path d="m3 17.5 9 5 9-5" opacity=".5"/></symbol>
+    <symbol id="i-award" viewBox="0 0 24 24"><circle cx="12" cy="9" r="6"/><path d="m12 6 1 2 2.2.3-1.6 1.5.4 2.2-2-1-2 1 .4-2.2L8.8 8.3 11 8z"/><path d="m8.5 14-2 7 3-1.5 2 2 .5-6.5M15.5 14l2 7-3-1.5-2 2"/></symbol>
+    <symbol id="i-clip" viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1"/><path d="m9 13 2 2 4-4"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></symbol>
+    <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/><path d="m12 12 7-7M16 5h3v3"/></symbol>
+    <symbol id="i-stack" viewBox="0 0 24 24"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v6c0 1.7 3.6 3 8 3s8-1.3 8-3V6"/><path d="M4 12v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></symbol>
+    <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3 2 20h20L12 3z"/><path d="M12 10v4M12 17h.01"/></symbol>
+    <symbol id="i-puzzle" viewBox="0 0 24 24"><path d="M4 8h4a2 2 0 1 1 4 0h4v4a2 2 0 1 1 0 4v4H4z"/></symbol>
+    <symbol id="i-ext" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9"/><path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M6 4h11v16H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/><path d="M4 18a2 2 0 0 1 2-2h11"/></symbol>
+    <symbol id="i-bookmark" viewBox="0 0 24 24"><path d="M6 4h12v17l-6-4-6 4z"/></symbol>
+    <symbol id="i-share" viewBox="0 0 24 24"><circle cx="18" cy="5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="19" r="2.5"/><path d="m8.2 10.8 7.6-4.6M8.2 13.2l7.6 4.6"/></symbol>
+    <symbol id="i-send" viewBox="0 0 24 24"><path d="M21 3 10 14"/><path d="m21 3-7 18-4-7-7-4z"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14A8 8 0 1 1 10 4a6.5 6.5 0 0 0 10 10z"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+    <symbol id="i-table" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M9 10v10"/></symbol>
+    <symbol id="i-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5z"/></symbol>
+    <!-- use icons -->
+    <symbol id="u-present" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="1"/><path d="M12 16v4M8 20h8"/><path d="m10 8 1 2 2 .3-1.5 1.3.4 2-1.9-1-1.9 1 .4-2L7 10.3 9 10z"/></symbol>
+    <symbol id="u-chart" viewBox="0 0 24 24"><path d="M4 20h16"/><rect x="5" y="13" width="3" height="5"/><rect x="10.5" y="9" width="3" height="9"/><rect x="16" y="5" width="3" height="13"/></symbol>
+    <symbol id="u-video" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m10 9 5 3-5 3z"/></symbol>
+    <symbol id="u-quiz" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="m8 8 1.5 1.5L12 7M8 14l1.5 1.5L12 13M14 8.5h3M14 14.5h3"/></symbol>
+    <symbol id="u-slides" viewBox="0 0 24 24"><rect x="3" y="6" width="14" height="10" rx="1"/><path d="M7 3h14v10"/><path d="M6 20h8"/></symbol>
+    <symbol id="u-game" viewBox="0 0 24 24"><path d="M6 8h12a4 4 0 0 1 3.7 5.5L20 18a2 2 0 0 1-3.4.5L15 16H9l-1.6 2.5A2 2 0 0 1 4 18l-1.7-4.5A4 4 0 0 1 6 8z"/><path d="M8 11v3M6.5 12.5h3M15 12h.01M17 13.5h.01"/></symbol>
+    <symbol id="u-route" viewBox="0 0 24 24"><circle cx="6" cy="18" r="2"/><circle cx="18" cy="6" r="2"/><path d="M8 18h6a3 3 0 0 0 0-6h-4a3 3 0 0 1 0-6h6"/></symbol>
+    <symbol id="u-qvideo" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="m10 7.5 4 2.5-4 2.5z"/><path d="M8 20h8"/><circle cx="18" cy="19" r="0"/></symbol>
+    <symbol id="u-flip" viewBox="0 0 24 24"><path d="M4 9h13l-3-3M20 15H7l3 3"/></symbol>
+    <symbol id="u-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></symbol>
+    <symbol id="u-units" viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="1"/><rect x="13" y="4" width="7" height="7" rx="1"/><rect x="4" y="13" width="7" height="7" rx="1"/><rect x="13" y="13" width="7" height="7" rx="1"/></symbol>
+    <symbol id="u-folder" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></symbol>
+    <symbol id="u-export" viewBox="0 0 24 24"><path d="M12 15V3M8 7l4-4 4 4"/><path d="M4 14v5a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5"/></symbol>
+  </defs>
+</svg>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#" data-home>
+      <svg width="46" height="38" viewBox="0 0 46 38" aria-hidden="true"><path d="M23 8C17 3 9 3 3 5v27c6-2 14-2 20 3V8z" fill="#ece8fb" stroke="#4a3a91" stroke-width="2.2" stroke-linejoin="round"/><path d="M23 8c6-5 14-5 20-3v27c-6-2-14-2-20 3V8z" fill="#ece8fb" stroke="#4a3a91" stroke-width="2.2" stroke-linejoin="round"/><path d="M8 11c3-1 7-1 10 1M8 16c3-1 7-1 10 1M8 21c3-1 7-1 10 1M28 12c3-2 7-2 10-1M28 17c3-2 7-2 10-1M28 22c3-2 7-2 10-1" stroke="#6a58c2" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>
+      <div class="brand-t">المكتبة الرقمية المهنية<br><span>للمصمم التعليمي</span></div>
+    </a>
+    <nav class="menu" id="menu">
+      <button type="button" class="on" data-home>الرئيسية</button>
+      <button type="button" data-nav="tools">المكتبة</button>
+      <button type="button" data-dlg="about">عن المشروع</button>
+      <button type="button" data-dlg="help">المساعدة</button>
+    </nav>
+    <div class="hsearch">
+      <svg class="ico"><use href="#i-search"/></svg>
+      <input id="q" type="search" placeholder="ابحث في المكتبة…" aria-label="ابحث في المكتبة" autocomplete="off">
+      <div class="sres" id="sres"></div>
+    </div>
+    <button class="iconbtn" type="button" id="themeBtn" aria-label="تبديل الوضع الليلي"><svg class="ico" style="width:18px;height:18px"><use href="#i-moon"/></svg></button>
+    <button class="iconbtn burger" type="button" id="burger" aria-label="القائمة"><svg class="ico" style="width:18px;height:18px"><use href="#i-menu"/></svg></button>
+  </div>
+</header>
+
+<main>
+  <div class="hero">
+    <div class="wrap">
+      <div>
+        <h1>المكتبة الرقمية المهنية<br>للمصمم التعليمي</h1>
+        <p>وجهتك الشاملة لموارد وأدوات وأطر وشهادات ومعايير تدعم تطوير ممارساتك في التصميم التعليمي.</p>
+      </div>
+      <svg class="art" viewBox="0 0 470 240" role="img" aria-label="رسم توضيحي لحاسوب محمول ومكتبة">
+        <ellipse cx="240" cy="226" rx="220" ry="10" fill="#4a3a91" opacity=".08"/>
+        <!-- plant -->
+        <path d="M402 226h40l-5-46h-30z" fill="#f1eee8" stroke="#d9d3c6"/>
+        <path d="M422 182c-4-30-24-46-38-52 10 16 14 34 38 52z" fill="#5c9b6b"/>
+        <path d="M422 182c2-34 16-56 30-64-4 20-10 44-30 64z" fill="#6fae7c"/>
+        <path d="M422 182c-12-22-34-28-48-26 14 8 26 22 48 26z" fill="#4f8a5e"/>
+        <path d="M422 182c6-22 26-36 40-36-10 12-20 30-40 36z" fill="#5c9b6b"/>
+        <!-- laptop -->
+        <path d="M150 50a8 8 0 0 1 8-8h196a8 8 0 0 1 8 8v138H150z" fill="#2a2740"/>
+        <rect x="160" y="52" width="192" height="128" rx="3" fill="#f4f1fd"/>
+        <rect x="174" y="66" width="164" height="3" rx="1.5" fill="#d8d2f1"/>
+        <rect x="174" y="112" width="164" height="3" rx="1.5" fill="#d8d2f1"/>
+        <rect x="174" y="158" width="164" height="3" rx="1.5" fill="#d8d2f1"/>
+        <rect x="180" y="80" width="26" height="32" rx="3" fill="#7d6bd0"/><path d="m189 90 9 6-9 6z" fill="#fff"/>
+        <rect x="214" y="86" width="20" height="26" rx="2" fill="#c8822f"/>
+        <rect x="240" y="78" width="8" height="34" fill="#4a3a91"/><rect x="250" y="82" width="7" height="30" fill="#a596e6"/><rect x="259" y="76" width="9" height="36" fill="#e3cfa8"/>
+        <path d="M300 98h18l-3 14h-12z" fill="#f1eee8"/><path d="M309 98c-3-8-9-12-13-12 3 5 6 9 13 12zM309 98c2-9 7-14 12-15-2 6-5 11-12 15z" fill="#5c9b6b"/>
+        <rect x="180" y="124" width="30" height="34" rx="3" fill="#6a58c2"/><path d="m187 136 8-4 8 4-8 4z M190 138v5c3 2 7 2 10 0v-5" fill="none" stroke="#fff" stroke-width="1.6"/>
+        <rect x="218" y="124" width="44" height="34" rx="3" fill="#ece8fb" stroke="#c8bff0"/><path d="m222 152 10-12 8 8 6-6 12 10z" fill="#a596e6"/>
+        <rect x="270" y="124" width="34" height="34" rx="3" fill="#fff" stroke="#c8bff0"/><path d="M276 132h22M276 138h22M276 144h16M276 150h20" stroke="#a596e6" stroke-width="2"/>
+        <path d="M124 188h264l-14 18H138z" fill="#c9c4da"/><path d="M124 188h264v4H124z" fill="#e6e2f1"/>
+        <!-- books -->
+        <rect x="30" y="206" width="112" height="20" rx="3" fill="#b9a7e9"/><rect x="30" y="210" width="112" height="3" fill="#fff" opacity=".6"/>
+        <rect x="40" y="188" width="98" height="18" rx="3" fill="#d6cdb8"/><rect x="40" y="192" width="98" height="3" fill="#fff" opacity=".6"/>
+        <rect x="34" y="170" width="104" height="18" rx="3" fill="#9a8ad6"/><rect x="34" y="174" width="104" height="3" fill="#fff" opacity=".5"/>
+        <rect x="44" y="154" width="90" height="16" rx="3" fill="#e9dfc9"/>
+      </svg>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="cats" id="cats"></div>
+    <div class="crumb" id="crumb"></div>
+    <div class="layout" id="library">
+      <aside class="box side">
+        <h3>الأدوات والتقنيات الرقمية</h3>
+        <div class="list" id="tlist"></div>
+      </aside>
+      <div class="content" id="view"></div>
+    </div>
+  </div>
+</main>
+
+<footer>المكتبة الرقمية المهنية للمصمم التعليمي · الأدوات والتقنيات الرقمية · مسودة محتوى قابلة للمراجعة</footer>
+
+<dialog id="dlg"></dialog>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+/* ======================= البيانات ======================= */
+const CATS = [
+  {k:"tools", t:"الأدوات والتقنيات الرقمية", d:"أدوات للتصميم وتطوير المحتوى التعليمي", i:"i-laptop", ready:true},
+  {k:"models", t:"النماذج والأطر المهنية", d:"نماذج وأطر تدعم التصميم التعليمي", i:"i-layers"},
+  {k:"certs", t:"الشهادات الاحترافية", d:"شهادات معتمدة للتطور المهني", i:"i-award"},
+  {k:"standards", t:"المعايير والكفايات المهنية", d:"مراجع ومعايير للأداء المهني", i:"i-clip"}
+];
+
+const TOOLS = [
+ {id:"canva", name:"Canva", g:"linear-gradient(135deg,#21c3d6,#6a3df0 70%,#8b2fd6)", url:"https://www.canva.com/",
+  cat:"التصميم البصري وإنتاج الوسائط التعليمية",
+  about:"منصة تصميم رقمية تتيح إنشاء العروض التقديمية والإنفوجرافيك والمواد التعليمية المرئية باستخدام قوالب جاهزة وأدوات تحرير سهلة الاستخدام.",
+  uses:[["u-present","تصميم العروض التقديمية التعليمية"],["u-chart","إعداد الإنفوجرافيك والملصقات"],["u-video","إنتاج فيديوهات ومواد تعليمية مرئية"]],
+  features:["قوالب جاهزة","مكتبة عناصر بصرية","محرر فيديو","أدوات تعاون","ميزات تصميم مدعومة بالذكاء الاصطناعي"],
+  langShort:"العربية، الإنجليزية", lang:"العربية والإنجليزية ولغات أخرى؛ تدعم الواجهة والمحتوى العربي.",
+  plans:[["free","Canva Free","خطة مجانية دائمة تشمل قوالب وعناصر وأدوات أساسية."],["paid","Canva Pro","اشتراك مدفوع يوفر عناصر مميزة وأدوات متقدمة؛ قد تتوفر تجربة مجانية للمؤهلين. يُراجع السعر ومدة التجربة عند التسجيل."]],
+  limits:["بعض العناصر المميزة وأدوات التحرير المتقدمة تتطلب اشتراكًا."],
+  open:false, fully:false, arabicCmp:"نعم، واجهة ومحتوى", kw:"عروض انفوجرافيك ملصقات فيديو تصميم بصري"},
+ {id:"h5p", name:"H5P", g:"linear-gradient(135deg,#3b8de6,#1f5fb8)", url:"https://h5p.org/",
+  cat:"تطوير المحتوى التعليمي التفاعلي",
+  about:"تقنية مفتوحة المصدر لإنشاء أنشطة وموارد تعليمية تفاعلية يمكن دمجها في المنصات التعليمية الداعمة.",
+  uses:[["u-quiz","تصميم الاختبارات والأنشطة التفاعلية"],["u-qvideo","إنشاء الفيديو التفاعلي"],["u-slides","إعداد عروض وأنشطة تعليمية متنوعة"]],
+  features:["أنواع متعددة من الأنشطة","محررات أسئلة","فيديو تفاعلي","دمج المحتوى في أنظمة إدارة التعلم"],
+  langShort:"متعدد اللغات", lang:"يمكن إنشاء محتوى بالعربية والإنجليزية ولغات أخرى؛ لغة المحرر قد تختلف حسب المنصة.",
+  plans:[["free","H5P مفتوح المصدر","مجاني من دون رسوم ترخيص عند توفر بيئة مناسبة."],["paid","H5P.com","خدمة استضافة سحابية مدفوعة؛ تُراجع خطة الأسعار وأي تجربة متاحة من الموقع الرسمي."]],
+  limits:["قد تحتاج استضافة المحتوى ونشره إلى منصة أو خدمة مدفوعة.","H5P.org ليس استضافة دائمة للمحتوى الإنتاجي."],
+  open:true, fully:false, arabicCmp:"المحتوى نعم، والمحرر حسب المنصة", kw:"اختبار اختبارات انشطة تفاعلية فيديو تفاعلي نظام ادارة التعلم"},
+ {id:"genially", name:"Genially", g:"linear-gradient(135deg,#ff6b5a,#c7254e)", url:"https://genially.com/",
+  cat:"تصميم العروض والتجارب التفاعلية",
+  about:"منصة رقمية لإنشاء عروض وأنشطة وتجارب تعليمية تفاعلية دون الحاجة إلى خبرة برمجية متقدمة.",
+  uses:[["u-present","تصميم العروض التقديمية التفاعلية"],["u-game","إنتاج الألعاب التعليمية"],["u-route","بناء سيناريوهات وتجارب تعلم تفاعلية"]],
+  features:["قوالب تفاعلية","رسوم متحركة","أزرار ونوافذ تفاعلية","وسائط متعددة"],
+  langShort:"العربية، الإنجليزية (محتوى)", lang:"يمكن إنشاء محتوى عربي وإنجليزي؛ يُتحقق من لغات واجهة التحرير المتاحة قبل النشر.",
+  plans:[["free","Genially Free","خطة مجانية دائمة بميزات أساسية."],["paid","الخطط المدفوعة","توفر قوالب مميزة وخيارات تصدير ومشاركة إضافية. يُراجع سعر الخطة الحالية ومدة التجربة من الموقع الرسمي."]],
+  limits:["بعض خيارات التنزيل والخصوصية والعمل دون اتصال تتطلب خطة مدفوعة."],
+  open:false, fully:false, arabicCmp:"المحتوى نعم، والواجهة يُتحقق منها", kw:"عروض تفاعلية العاب لعبة تعليمية سيناريو تجارب"},
+ {id:"edpuzzle", name:"Edpuzzle", g:"linear-gradient(135deg,#f6b73c,#e8792d)", url:"https://edpuzzle.com/",
+  cat:"الفيديو التعليمي التفاعلي والتقويم",
+  about:"منصة لتحويل مقاطع الفيديو إلى أنشطة تعليمية تفاعلية تتضمن أسئلة، مع متابعة إجابات المتعلمين وتقدمهم.",
+  uses:[["u-qvideo","إدراج أسئلة أثناء الفيديو"],["u-flip","إعداد أنشطة الصف المقلوب"],["u-check","التقويم التكويني ومتابعة فهم المتعلمين"]],
+  features:["محرر فيديو","أسئلة موضوعية ومفتوحة","أدوات إسناد الأنشطة","تقارير تقدم المتعلمين"],
+  langShort:"متعدد اللغات", lang:"واجهة متعددة اللغات؛ يمكن توظيف فيديوهات ومحتوى بالعربية، ولا يُفترض وجود واجهة عربية كاملة دون تحقق.",
+  plans:[["free","Edpuzzle Basic","خطة مجانية مع حد لعدد الأنشطة المحفوظة (20 نشاطًا وفق المعلومات المرجعية)."],["paid","Pro Teacher","اشتراك مدفوع يزيد السعة والميزات. يُراجع السعر الحالي وفترة التجربة إن وجدت."]],
+  limits:["حد عدد الأنشطة في الخطة المجانية.","بعض خيارات الاستخدام المتقدم تعتمد على نوع الاشتراك."],
+  open:false, fully:false, arabicCmp:"المحتوى نعم، والواجهة غير مؤكدة", kw:"فيديو اسئلة صف مقلوب تقويم تكويني تقارير متابعة"},
+ {id:"exe", name:"eXeLearning", g:"linear-gradient(135deg,#8fd16a,#3f9a4a)", url:"https://exelearning.net/",
+  cat:"تأليف المحتوى والمقررات الإلكترونية",
+  about:"أداة مفتوحة المصدر لإنشاء وتنظيم وحدات وموارد تعليمية إلكترونية قابلة للنشر والتصدير.",
+  uses:[["u-units","بناء وحدات ودروس إلكترونية"],["u-folder","تنظيم المحتوى والأنشطة"],["u-export","تصدير الوحدات لمنصات إدارة التعلم"]],
+  features:["محرر صفحات تعليمية","إضافة وسائط وأنشطة","تنظيم الوحدات","التصدير إلى HTML وSCORM"],
+  langShort:"الإنجليزية، الإسبانية وغيرها", lang:"الإنجليزية والإسبانية ولغات أخرى؛ يلزم التحقق من اكتمال دعم الواجهة العربية للإصدار المستخدم.",
+  plans:[["free","مجاني ومفتوح المصدر","لا يتطلب اشتراكًا أو فترة تجريبية مدفوعة لاستخدام البرنامج نفسه."]],
+  limits:["قد تتطلب عملية نشر المحتوى استضافة أو منصة.","يحتاج المبتدئ إلى تعلم خطوات التأليف والتصدير."],
+  open:true, fully:true, arabicCmp:"يلزم التحقق للإصدار المستخدم", kw:"وحدات دروس مقرر الكتروني تأليف سكورم scorm تصدير نظام ادارة التعلم"}
+];
+
+const PICKS = [
+  {t:"عرض تقديمي أو إنفوجرافيك جذاب", ids:["canva","genially"], why:"Canva للمواد البصرية والفيديو، وGenially إذا أردت العرض تفاعليًا بأزرار ونوافذ."},
+  {t:"اختبار أو نشاط تفاعلي داخل منصة تعلم", ids:["h5p"], why:"H5P يوفر أنواعًا متعددة من الأنشطة ومحررات أسئلة قابلة للدمج في أنظمة إدارة التعلم."},
+  {t:"فيديو بأسئلة ومتابعة لفهم المتعلمين", ids:["edpuzzle","h5p"], why:"Edpuzzle يضيف أسئلة أثناء الفيديو مع تقارير تقدم، وH5P بديل مفتوح المصدر للفيديو التفاعلي."},
+  {t:"لعبة تعليمية أو سيناريو تعلم", ids:["genially"], why:"Genially يتيح بناء الألعاب والسيناريوهات التفاعلية دون خبرة برمجية متقدمة."},
+  {t:"وحدة أو مقرر إلكتروني كامل (SCORM)", ids:["exe","h5p"], why:"eXeLearning لتأليف الوحدات وتصديرها إلى HTML وSCORM مجانًا، مع H5P لإثرائها بالأنشطة."},
+  {t:"أداة مجانية بالكامل دون اشتراك", ids:["exe","h5p"], why:"eXeLearning مجاني بالكامل، وH5P مفتوح المصدر دون رسوم ترخيص عند توفر بيئة مناسبة."}
+];
+
+/* ======================= أدوات مساعدة ======================= */
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const ic = (id,cls="ico",st="") => `<svg class="${cls}" style="${st}" aria-hidden="true"><use href="#${id}"/></svg>`;
+const byId = id => TOOLS.find(t=>t.id===id);
+const mono = (t,size) => `<div class="mono ${size}" style="background:${t.g}" aria-hidden="true">${t.name[0].toUpperCase()}</div>`;
+const store = {
+  get(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}},
+  set(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true}catch(e){return false}}
+};
+let toastT; function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("show");clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove("show"),2600)}
+const STAR = '<svg viewBox="0 0 24 24"><path d="m12 3 2.8 5.8 6.2.9-4.5 4.4 1 6.2L12 17.4l-5.5 2.9 1-6.2L3 9.7l6.2-.9z"/></svg>';
+
+/* ======================= الأقسام ======================= */
+$("#cats").innerHTML = CATS.map((c,i)=>`
+  <button type="button" class="cat c${i+1}" data-cat="${c.k}">
+    <div class="row"><b>${c.t}</b>${ic(c.i)}</div>
+    <span class="d">${c.d}</span>
+    ${c.ready?"":'<span class="soon">قيد الإعداد</span>'}
+    <span class="go">${ic("i-chev","ico","width:16px;height:16px;stroke-width:2.4")}</span>
+  </button>`).join("");
+document.querySelectorAll(".cat").forEach(b=>b.onclick=()=>{
+  const c=CATS.find(x=>x.k===b.dataset.cat);
+  if(c.ready){ go("tool/"+(current||"canva")); $("#crumb").scrollIntoView(); }
+  else toast("قسم «"+c.t+"» قيد الإعداد، ويُضاف قريبًا.");
+});
+
+/* ======================= القائمة الجانبية ======================= */
+$("#tlist").innerHTML = TOOLS.map(t=>`<button type="button" class="tbtn" data-tool="${t.id}">${mono(t,"s")}<span class="en">${t.name}</span></button>`).join("")
+ + `<hr><button type="button" class="tbtn sm" data-page="picker">${ic("i-compass")}أي أداة تناسبني؟</button>
+    <button type="button" class="tbtn sm" data-page="compare">${ic("i-table")}مقارنة الأدوات</button>`;
+document.querySelectorAll("[data-tool]").forEach(b=>b.onclick=()=>go("tool/"+b.dataset.tool));
+document.querySelectorAll("[data-page]").forEach(b=>b.onclick=()=>go(b.dataset.page));
+
+/* ======================= الصفحات ======================= */
+let current=null;
+function crumb(last){
+  $("#crumb").innerHTML = `${ic("i-home","ico")}<button type="button" data-home>الرئيسية</button>${ic("i-chev","ico")}<button type="button" data-goto="tool/${current||"canva"}">الأدوات والتقنيات الرقمية</button>${last?ic("i-chev","ico")+"<b dir='auto'>"+esc(last)+"</b>":""}`;
+  $("#crumb [data-goto]").onclick=e=>go(e.currentTarget.dataset.goto);
+  $("#crumb [data-home]").onclick=goHome;
+}
+function setActive(key){document.querySelectorAll(".tbtn").forEach(b=>b.classList.toggle("on",b.dataset.tool===key||b.dataset.page===key))}
+
+function toolPage(t){
+  const bm = (store.get("bookmarks")||[]).includes(t.id);
+  return `
+  <div class="box head">
+    ${mono(t,"l")}
+    <div><h2>${t.name}</h2><div class="sub">${esc(t.cat)}</div></div>
+    <div class="acts">
+      <div class="row">
+        <button type="button" class="iconbtn" id="shareBtn" aria-label="مشاركة رابط الأداة">${ic("i-share","ico","width:18px;height:18px")}</button>
+        <button type="button" class="iconbtn ${bm?"on":""}" id="bmBtn" aria-pressed="${bm}" aria-label="حفظ في المفضلة">${ic("i-bookmark","ico","width:18px;height:18px")}</button>
+      </div>
+      <span class="pill"><span class="st">★</span> لا توجد تقييمات بعد</span>
+    </div>
+  </div>
+  <div class="inner">
+    <div class="col">
+      <div class="box sec"><h3>${ic("i-info")}نبذة تعريفية</h3><p>${esc(t.about)}</p></div>
+      <div class="box sec"><h3>${ic("i-target")}أبرز الاستخدامات للمصمم التعليمي</h3>
+        <div class="uses">${t.uses.map(([i,u])=>`<div class="use">${ic(i)}<span>${esc(u)}</span></div>`).join("")}</div></div>
+      <div class="box sec"><h3>${ic("i-puzzle")}المكونات والميزات الرئيسية</h3>
+        <div class="feats">${t.features.map(f=>`<span class="feat">${esc(f)}</span>`).join("")}</div></div>
+      <div class="two">
+        <div class="box sec"><h3>${ic("i-stack")}الإتاحة والاشتراك</h3>
+          ${t.plans.map(([k,n,d])=>`<div class="plan ${k}"><b dir="auto">${esc(n)}</b><span class="tag">${k==="free"?"مجانية":"مدفوعة"}</span><span class="t">${esc(d)}</span></div>`).join("")}</div>
+        <div class="box sec lang"><h3>${ic("i-globe")}اللغة</h3><span class="langpill">${esc(t.langShort)}</span><p>${esc(t.lang)}</p></div>
+      </div>
+      <div class="box sec limits"><h3>${ic("i-alert")}أبرز القيود</h3><ul>${t.limits.map(l=>`<li>${esc(l)}</li>`).join("")}</ul></div>
+      <a class="access" href="${t.url}" target="_blank" rel="noopener">${ic("i-ext")}الوصول إلى الأداة</a>
+      <div class="stamp">آخر مراجعة للبيانات: يُحدد عند التحقق النهائي من الموقع الرسمي.</div>
+    </div>
+    <div class="box sec rate" id="rate"></div>
+  </div>`;
+}
+function rateBox(t){
+  const mine=store.get("rate-"+t.id);
+  $("#rate").innerHTML = `
+    <h3>تقييم المستخدمين</h3>
+    <div class="lbl">قيّم تجربتك مع الأداة</div>
+    <div class="stars" role="radiogroup" aria-label="التقييم من 5">${[1,2,3,4,5].map(v=>`<button type="button" class="star" data-v="${v}" aria-label="${v} من 5">${STAR}</button>`).join("")}</div>
+    <input id="rName" maxlength="60" placeholder="اسمك (اختياري)" value="${mine?esc(mine.name):""}">
+    <textarea id="rText" rows="3" maxlength="400" placeholder="اكتب ملاحظتك أو تجربتك…">${mine?esc(mine.text):""}</textarea>
+    <button type="button" class="send" id="rSave">${ic("i-send","ico","width:18px;height:18px")}إرسال التقييم</button>
+    <div class="msg" id="rMsg" aria-live="polite"></div>
+    <hr>
+    <h3 style="display:flex;gap:8px;align-items:center">${ic("i-chat","ico","color:var(--pri)")}آراء المستخدمين</h3>
+    ${mine?`<div class="review"><div class="avatar">${ic("i-user","ico","width:20px;height:20px")}</div><div><b>${esc(mine.name||"تقييمك")}</b><span class="when">تقييمك المحفوظ</span><div class="rs">${"★".repeat(mine.v)}${"☆".repeat(5-mine.v)}</div>${mine.text?`<p>${esc(mine.text)}</p>`:""}</div></div>`
+          :`<div class="emptyrev">لم تُضف آراء بعد.<br>يُستكمل بعد مشاركة المستخدمين.</div>`}
+    <div class="small">يُحفظ تقييمك في متصفحك فقط، ولا يظهر لبقية الزوار.</div>`;
+  let v=mine?mine.v:0;
+  const stars=[...document.querySelectorAll("#rate .star")];
+  const paint=n=>stars.forEach(s=>s.classList.toggle("on",+s.dataset.v<=n));
+  paint(v);
+  stars.forEach(s=>{s.onclick=()=>{v=+s.dataset.v;paint(v)};s.onmouseenter=()=>paint(+s.dataset.v);s.onmouseleave=()=>paint(v)});
+  $("#rSave").onclick=()=>{
+    if(!v){$("#rMsg").style.color="var(--red)";$("#rMsg").textContent="اختر عدد النجوم أولًا.";return}
+    if(store.set("rate-"+t.id,{v,name:$("#rName").value.trim(),text:$("#rText").value.trim()})){rateBox(t);$("#rMsg").textContent="تم حفظ تقييمك، شكرًا لك."}
+    else{$("#rMsg").style.color="var(--red)";$("#rMsg").textContent="تعذّر الحفظ في هذا المتصفح."}
+  };
+}
+function showTool(id){
+  const t=byId(id)||TOOLS[0]; current=t.id;
+  $("#view").innerHTML=toolPage(t); rateBox(t); crumb(t.name); setActive(t.id);
+  $("#shareBtn").onclick=async()=>{
+    const url=location.href;
+    try{ if(navigator.share){await navigator.share({title:t.name,url});return} await navigator.clipboard.writeText(url); toast("تم نسخ رابط الأداة"); }
+    catch(e){ toast("رابط الأداة: "+url) }
+  };
+  $("#bmBtn").onclick=e=>{
+    let l=store.get("bookmarks")||[]; const on=l.includes(t.id);
+    l = on? l.filter(x=>x!==t.id) : [...l,t.id]; store.set("bookmarks",l);
+    e.currentTarget.classList.toggle("on",!on); e.currentTarget.setAttribute("aria-pressed",!on);
+    toast(on?"أُزيلت من المفضلة":"أُضيفت إلى المفضلة");
+  };
+}
+function showCompare(){
+  crumb("مقارنة الأدوات"); setActive("compare");
+  $("#view").innerHTML=`<div class="box sec"><h3>${ic("i-table")}مقارنة الأدوات الخمس</h3>
+   <div class="table-wrap"><table><thead><tr><th>الأداة</th><th>التصنيف</th><th>خطة مجانية</th><th>مفتوحة المصدر</th><th>اللغة ودعم العربية</th><th>أبرز القيود</th></tr></thead><tbody>
+   ${TOOLS.map(t=>`<tr><td class="tn"><button type="button" data-t="${t.id}">${t.name}</button></td><td>${esc(t.cat)}</td>
+     <td>${t.fully?"مجاني بالكامل":"نعم + خطة مدفوعة"}</td><td>${t.open?"نعم":"لا"}</td><td>${esc(t.arabicCmp)}</td><td>${esc(t.limits[0])}</td></tr>`).join("")}
+   </tbody></table></div></div>`;
+  document.querySelectorAll("#view [data-t]").forEach(b=>b.onclick=()=>go("tool/"+b.dataset.t));
+}
+function showPicker(){
+  crumb("أي أداة تناسبني؟"); setActive("picker");
+  $("#view").innerHTML=`<div class="box sec"><h3>${ic("i-compass")}أي أداة تناسب مهمتك؟</h3>
+    <p style="margin-bottom:14px">اختر ما تريد إنجازه، وسنقترح عليك الأداة الأنسب من المكتبة.</p>
+    <div class="opts">${PICKS.map((p,i)=>`<button type="button" class="opt" data-i="${i}" aria-pressed="false">${esc(p.t)}</button>`).join("")}</div>
+    <div id="res" aria-live="polite" style="margin-top:16px"></div></div>`;
+  document.querySelectorAll(".opt").forEach(o=>o.onclick=()=>{
+    document.querySelectorAll(".opt").forEach(x=>x.setAttribute("aria-pressed",x===o));
+    const p=PICKS[+o.dataset.i];
+    $("#res").innerHTML=`<p>${esc(p.why)}</p>`+p.ids.map((id,j)=>{const t=byId(id);return `<div class="rec">${mono(t,"s")}<div><b dir="ltr">${t.name}</b><span class="badge">${j?"بديل":"الاقتراح الأول"}</span><br><span class="small">${esc(t.cat)}</span></div><button type="button" data-t="${id}">عرض الأداة</button></div>`}).join("");
+    document.querySelectorAll("#res [data-t]").forEach(b=>b.onclick=()=>go("tool/"+b.dataset.t));
+  });
+}
+
+/* ======================= التنقل ======================= */
+function go(h){ if(location.hash!=="#"+h) location.hash=h; else route(); }
+function route(){
+  const h=location.hash.slice(1);
+  if(h.startsWith("tool/")) showTool(h.slice(5));
+  else if(h==="compare") showCompare();
+  else if(h==="picker") showPicker();
+  else showTool(current||"canva");
+  document.querySelectorAll("nav.menu button").forEach(b=>b.classList.toggle("on", h ? b.dataset.nav==="tools" : b.hasAttribute("data-home")));
+  if(h && window.scrollY < 200) $("#crumb").scrollIntoView();
+}
+function goHome(){ history.pushState("",document.title,location.pathname); route(); window.scrollTo(0,0); }
+window.addEventListener("hashchange",route);
+document.querySelectorAll("[data-home]").forEach(b=>b.addEventListener("click",e=>{e.preventDefault();goHome();$("#menu").classList.remove("open")}));
+document.querySelector('[data-nav="tools"]').onclick=()=>{go("tool/"+(current||"canva"));$("#menu").classList.remove("open")};
+$("#burger").onclick=()=>$("#menu").classList.toggle("open");
+route();
+
+/* ======================= البحث ======================= */
+const norm = s => s.toLowerCase().replace(/[أإآ]/g,"ا").replace(/ة/g,"ه").replace(/ى/g,"ي");
+const q=$("#q"), sres=$("#sres");
+q.oninput=()=>{
+  const v=norm(q.value.trim());
+  if(!v){sres.classList.remove("show");return}
+  const hits=TOOLS.filter(t=>norm([t.name,t.cat,t.about,t.uses.map(u=>u[1]).join(" "),t.features.join(" "),t.kw].join(" ")).includes(v));
+  sres.innerHTML = hits.length? hits.map(t=>`<button type="button" data-t="${t.id}">${mono(t,"s")}<span><b dir="ltr">${t.name}</b><small>${esc(t.cat)}</small></span></button>`).join("")
+                              : `<div style="padding:10px;color:var(--muted);font-size:14px">لا توجد نتائج مطابقة.</div>`;
+  sres.classList.add("show");
+  sres.querySelectorAll("[data-t]").forEach(b=>b.onclick=()=>{go("tool/"+b.dataset.t);q.value="";sres.classList.remove("show")});
+};
+q.onkeydown=e=>{if(e.key==="Enter"){const f=sres.querySelector("[data-t]");if(f)f.click()} if(e.key==="Escape")sres.classList.remove("show")};
+document.addEventListener("click",e=>{if(!e.target.closest(".hsearch"))sres.classList.remove("show")});
+
+/* ======================= النوافذ ======================= */
+const DLG={
+  about:["عن المشروع",`<p>المكتبة الرقمية المهنية للمصمم التعليمي مشروع يجمع في مكان واحد ما يحتاجه المصمم التعليمي لتطوير ممارسته المهنية، وتتكون من أربع مواد:</p><ul style="margin-top:8px">${CATS.map(c=>`<li>${c.t}${c.ready?"":" (قيد الإعداد)"}</li>`).join("")}</ul><p style="margin-top:10px">تعرض مادة الأدوات والتقنيات الرقمية بطاقات موحدة لخمس أدوات؛ تُوثَّق الأسعار وفترات التجربة ولغات الواجهة من المواقع الرسمية عند النشر النهائي، ولا تُدرج تقييمات المستفيدين إلا بعد جمعها فعليًا.</p>`],
+  help:["المساعدة",`<ol><li>اختر المادة من البطاقات أعلى الصفحة.</li><li>تنقّل بين الأدوات من القائمة الجانبية، أو ابحث عن أداة أو استخدام من شريط البحث.</li><li>استخدم «أي أداة تناسبني؟» لاقتراح أداة حسب مهمتك، و«مقارنة الأدوات» لرؤيتها جنبًا إلى جنب.</li><li>اضغط «الوصول إلى الأداة» لفتح موقعها الرسمي، وشارك تقييمك من خانة تقييم المستخدمين.</li></ol>`]
+};
+document.querySelectorAll("[data-dlg]").forEach(b=>b.onclick=()=>{
+  const [h,body]=DLG[b.dataset.dlg]; const d=$("#dlg");
+  d.innerHTML=`<div class="dl-h"><h3>${h}</h3><button type="button" class="iconbtn" aria-label="إغلاق">${ic("i-x","ico","width:18px;height:18px")}</button></div><div class="dl-b">${body}</div>`;
+  d.querySelector("button").onclick=()=>d.close(); d.showModal(); $("#menu").classList.remove("open");
+});
+$("#dlg").addEventListener("click",e=>{if(e.target.id==="dlg")e.target.close()});
+
+/* ======================= الوضع الليلي ======================= */
+const root=document.documentElement, th=store.get("theme"); if(th) root.dataset.theme=th;
+$("#themeBtn").onclick=()=>{
+  const dark=root.dataset.theme?root.dataset.theme==="dark":matchMedia("(prefers-color-scheme: dark)").matches;
+  root.dataset.theme=dark?"light":"dark"; store.set("theme",root.dataset.theme);
+};
+</script>
+</body>
+</html>
