@@ -112,7 +112,7 @@ nav.menu button.on{color:var(--pri);border-bottom-color:var(--pri);font-weight:6
 .mono.l{width:86px;height:86px;font-size:34px;box-shadow:0 8px 20px rgba(60,40,140,.25)}
 
 .content{display:flex;flex-direction:column;gap:16px;min-width:0}
-.head{display:flex;align-items:center;gap:18px;padding:20px 22px}
+.head{scroll-margin-top:90px;display:flex;align-items:center;gap:18px;padding:20px 22px}
 .head h2{margin:0;font-size:32px;line-height:1.2;direction:ltr;text-align:right;font-weight:800}
 .head .sub{color:var(--ink-2);margin-top:4px}
 .head .acts{margin-inline-start:auto;display:flex;flex-direction:column;align-items:flex-end;gap:10px}
@@ -151,6 +151,29 @@ nav.menu button.on{color:var(--pri);border-bottom-color:var(--pri);font-weight:6
 .access{display:flex;align-items:center;justify-content:center;gap:10px;background:var(--pri);color:var(--on-pri);text-decoration:none;border-radius:12px;padding:13px;font-weight:700;font-size:16px}
 .access:hover{background:var(--pri-2)}
 .stamp{font-size:12px;color:var(--muted);text-align:center;margin-top:-6px}
+
+/* accordion */
+.acc{background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);overflow:hidden;scroll-margin-top:90px}
+.acc summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:10px;padding:16px 20px;font-family:"Cairo",sans-serif;font-weight:700;font-size:17px}
+.acc summary::-webkit-details-marker{display:none}
+.acc summary:hover{background:var(--surface-2)}
+.acc summary .ico{color:var(--pri)}
+.acc summary .hint{margin-inline-start:auto;font-family:"IBM Plex Sans Arabic",sans-serif;font-weight:500;font-size:12px;color:var(--muted)}
+.acc summary .arr{width:30px;height:30px;border-radius:50%;background:var(--pri-soft);color:var(--pri);display:grid;place-items:center;transition:transform .2s;flex:none}
+.acc summary .arr .ico{width:16px;height:16px;transform:rotate(-90deg);stroke-width:2.4}
+.acc[open] summary .arr{transform:rotate(180deg)}
+.acc[open] summary{border-bottom:1px solid var(--line)}
+.acc .body{padding:16px 20px 20px;color:var(--ink-2)}
+.acc .body p{margin:0}
+.acc.limits{background:var(--surface)}
+.acc.limits summary .ico{color:var(--red)}
+.acc.limits .body{background:var(--red-soft)}
+.acc-tools{display:flex;gap:8px;justify-content:flex-end}
+.acc-tools button{background:none;border:1px solid var(--line);border-radius:999px;padding:4px 12px;font-size:13px;color:var(--ink-2)}
+.subnav{display:flex;flex-direction:column;gap:2px;margin:2px 22px 8px 0;padding-inline-start:12px;border-inline-start:2px solid var(--pri-soft)}
+.subnav button{background:none;border:0;text-align:right;padding:5px 8px;border-radius:8px;font-size:14px;color:var(--ink-2)}
+.subnav button:hover{background:var(--surface-2);color:var(--pri)}
+@media (max-width:860px){.subnav{display:none}}
 
 /* rating */
 .rate h3{margin:0 0 12px;font-size:17px}
@@ -376,7 +399,7 @@ const TOOLS = [
   features:["قوالب جاهزة","مكتبة عناصر بصرية","محرر فيديو","أدوات تعاون","ميزات تصميم مدعومة بالذكاء الاصطناعي"],
   langShort:"العربية، الإنجليزية", lang:"العربية والإنجليزية ولغات أخرى؛ تدعم الواجهة والمحتوى العربي.",
   plans:[["free","Canva Free","خطة مجانية دائمة تشمل قوالب وعناصر وأدوات أساسية."],["paid","Canva Pro","اشتراك مدفوع يوفر عناصر مميزة وأدوات متقدمة؛ قد تتوفر تجربة مجانية للمؤهلين. يُراجع السعر ومدة التجربة عند التسجيل."]],
-  limits:["بعض العناصر المميزة وأدوات التحرير المتقدمة تتطلب اشتراكًا."],
+  limits:["بعض العناصر المميزة وأدوات التحرير المتقدمة تتطلب اشتراكًا.","جزء من القوالب والصور والعناصر يحمل علامة التاج (Pro)، ولا يُستخدم مجانًا.","أدوات مثل إزالة الخلفية وتغيير مقاس التصميم تلقائيًا (Magic Resize) متاحة في Pro فقط.","مساحة التخزين في الخطة المجانية 5 جيجابايت مقابل 100 جيجابايت في Pro.","تنزيل الصور بخلفية شفافة (PNG) أو بصيغة SVG من ميزات Pro.","حصة أدوات الذكاء الاصطناعي في الخطة المجانية محدودة."],
   open:false, fully:false, arabicCmp:"نعم، واجهة ومحتوى", kw:"عروض انفوجرافيك ملصقات فيديو تصميم بصري"},
  {id:"h5p", name:"H5P", g:"linear-gradient(135deg,#3b8de6,#1f5fb8)", url:"https://h5p.org/",
   cat:"تطوير المحتوى التعليمي التفاعلي",
@@ -468,6 +491,18 @@ function crumb(last){
 }
 function setActive(key){document.querySelectorAll(".tbtn").forEach(b=>b.classList.toggle("on",b.dataset.tool===key||b.dataset.page===key))}
 
+const SECS=[["about","نبذة تعريفية","i-info"],["uses","أبرز الاستخدامات للمصمم التعليمي","i-target"],["features","المكونات والميزات الرئيسية","i-puzzle"],["plans","الإتاحة والاشتراك","i-stack"],["lang","اللغة ودعم العربية","i-globe"],["limits","أبرز القيود","i-alert"]];
+function secBody(t,k){
+  switch(k){
+    case "about": return `<p>${esc(t.about)}</p>`;
+    case "uses": return `<div class="uses">${t.uses.map(([i,u])=>`<div class="use">${ic(i)}<span>${esc(u)}</span></div>`).join("")}</div>`;
+    case "features": return `<div class="feats">${t.features.map(f=>`<span class="feat">${esc(f)}</span>`).join("")}</div>`;
+    case "plans": return t.plans.map(([k2,n,d])=>`<div class="plan ${k2}"><b dir="auto">${esc(n)}</b><span class="tag">${k2==="free"?"مجانية":"مدفوعة"}</span><span class="t">${esc(d)}</span></div>`).join("");
+    case "lang": return `<span class="langpill">${esc(t.langShort)}</span><p>${esc(t.lang)}</p>`;
+    case "limits": return `<ul style="margin:0;padding-inline-start:20px">${t.limits.map(l=>`<li>${esc(l)}</li>`).join("")}</ul>`;
+  }
+}
+function openSec(k){const d=document.getElementById("sec-"+k); if(!d)return; d.open=true; d.scrollIntoView({block:"start"});}
 function toolPage(t){
   const bm = (store.get("bookmarks")||[]).includes(t.id);
   return `
@@ -484,18 +519,11 @@ function toolPage(t){
   </div>
   <div class="inner">
     <div class="col">
-      <div class="box sec"><h3>${ic("i-info")}نبذة تعريفية</h3><p>${esc(t.about)}</p></div>
-      <div class="box sec"><h3>${ic("i-target")}أبرز الاستخدامات للمصمم التعليمي</h3>
-        <div class="uses">${t.uses.map(([i,u])=>`<div class="use">${ic(i)}<span>${esc(u)}</span></div>`).join("")}</div></div>
-      <div class="box sec"><h3>${ic("i-puzzle")}المكونات والميزات الرئيسية</h3>
-        <div class="feats">${t.features.map(f=>`<span class="feat">${esc(f)}</span>`).join("")}</div></div>
-      <div class="two">
-        <div class="box sec"><h3>${ic("i-stack")}الإتاحة والاشتراك</h3>
-          ${t.plans.map(([k,n,d])=>`<div class="plan ${k}"><b dir="auto">${esc(n)}</b><span class="tag">${k==="free"?"مجانية":"مدفوعة"}</span><span class="t">${esc(d)}</span></div>`).join("")}</div>
-        <div class="box sec lang"><h3>${ic("i-globe")}اللغة</h3><span class="langpill">${esc(t.langShort)}</span><p>${esc(t.lang)}</p></div>
-      </div>
-      <div class="box sec limits"><h3>${ic("i-alert")}أبرز القيود</h3><ul>${t.limits.map(l=>`<li>${esc(l)}</li>`).join("")}</ul></div>
-      <a class="access" href="${t.url}" target="_blank" rel="noopener">${ic("i-ext")}الوصول إلى الأداة</a>
+      <div class="acc-tools"><button type="button" id="openAll">فتح الكل</button><button type="button" id="closeAll">إغلاق الكل</button></div>
+      ${SECS.map(([k,ttl,i])=>`<details class="acc ${k==="limits"?"limits":""}" id="sec-${k}">
+        <summary>${ic(i)}<span>${ttl}</span><span class="hint">اضغط للعرض</span><span class="arr">${ic("i-chev")}</span></summary>
+        <div class="body">${secBody(t,k)}</div></details>`).join("")}
+      <a class="access" href="${t.url}" target="_blank" rel="noopener">${ic("i-ext")}الوصول إلى ${t.name}</a>
       <div class="stamp">آخر مراجعة للبيانات: يُحدد عند التحقق النهائي من الموقع الرسمي.</div>
     </div>
     <div class="box sec rate" id="rate"></div>
@@ -530,6 +558,14 @@ function rateBox(t){
 function showTool(id){
   const t=byId(id)||TOOLS[0]; current=t.id;
   $("#view").innerHTML=toolPage(t); rateBox(t); crumb(t.name); setActive(t.id);
+  document.querySelectorAll(".acc").forEach(d=>d.addEventListener("toggle",()=>{d.querySelector(".hint").textContent=d.open?"اضغط للإخفاء":"اضغط للعرض"}));
+  $("#openAll").onclick=()=>document.querySelectorAll(".acc").forEach(d=>d.open=true);
+  $("#closeAll").onclick=()=>document.querySelectorAll(".acc").forEach(d=>d.open=false);
+  document.querySelectorAll(".subnav").forEach(n=>n.remove());
+  const btn=document.querySelector(`.tbtn[data-tool="${t.id}"]`);
+  btn.insertAdjacentHTML("afterend",`<div class="subnav">${SECS.map(([k,ttl])=>`<button type="button" data-sec="${k}">${ttl}</button>`).join("")}</div>`);
+  document.querySelectorAll(".subnav [data-sec]").forEach(b=>b.onclick=()=>openSec(b.dataset.sec));
+  const h=document.querySelector(".head"); if(h && h.getBoundingClientRect().top<0) h.scrollIntoView({block:"start"});
   $("#shareBtn").onclick=async()=>{
     const url=location.href;
     try{ if(navigator.share){await navigator.share({title:t.name,url});return} await navigator.clipboard.writeText(url); toast("تم نسخ رابط الأداة"); }
